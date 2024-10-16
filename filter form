@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Form Example</title>
+    <style>
+        /* Basic styling for the form */
+        .filter-form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .filter-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .filter-form select,
+        .filter-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .filter-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .filter-form button:hover {
+            background-color: #45a049;
+        }
+        /* Styling for the item list */
+        .item-list {
+            max-width: 400px;
+            margin: 20px auto;
+            list-style-type: none;
+            padding: 0;
+        }
+        .item-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Filter Form Example</h2>
+
+    <!-- Filter Form -->
+    <form id="filterForm" class="filter-form">
+        <!-- Item Name Dropdown -->
+        <label for="itemName">Item Name:</label>
+        <select id="itemName">
+            <option value="">Select Item</option>
+            <option value="Apple">Apple</option>
+            <option value="Banana">Banana</option>
+            <option value="Orange">Orange</option>
+            <option value="Grapes">Grapes</option>
+            <option value="Pineapple">Pineapple</option>
+        </select>
+
+        <!-- Status Dropdown -->
+        <label for="status">Status:</label>
+        <select id="status">
+            <option value="">Select Status</option>
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+        </select>
+
+        <!-- Date Filter -->
+        <label for="filterDate">Date:</label>
+        <input type="date" id="filterDate">
+
+        <!-- Filter Button -->
+        <button type="button" onclick="filterItems()">Filter</button>
+    </form>
+
+    <!-- List of Items -->
+    <ul id="itemList" class="item-list">
+        <li class="item" data-name="Apple" data-status="Available" data-date="2024-10-10">Apple - Available - 2024-10-10</li>
+        <li class="item" data-name="Banana" data-status="Unavailable" data-date="2024-10-12">Banana - Unavailable - 2024-10-12</li>
+        <li class="item" data-name="Orange" data-status="Available" data-date="2024-10-15">Orange - Available - 2024-10-15</li>
+        <li class="item" data-name="Grapes" data-status="Unavailable" data-date="2024-10-16">Grapes - Unavailable - 2024-10-16</li>
+        <li class="item" data-name="Pineapple" data-status="Available" data-date="2024-10-18">Pineapple - Available - 2024-10-18</li>
+    </ul>
+
+    <script>
+        // Filter function
+        function filterItems() {
+            const itemName = document.getElementById('itemName').value.toLowerCase();
+            const status = document.getElementById('status').value.toLowerCase();
+            const filterDate = document.getElementById('filterDate').value;
+
+            const items = document.querySelectorAll('.item');
+
+            // Loop through the items and filter based on the selected criteria
+            items.forEach(item => {
+                const itemNameData = item.getAttribute('data-name').toLowerCase();
+                const statusData = item.getAttribute('data-status').toLowerCase();
+                const dateData = item.getAttribute('data-date');
+
+                // Check if the item matches the selected filters
+                const matchesItemName = itemName === "" || itemName === itemNameData;
+                const matchesStatus = status === "" || status === statusData;
+                const matchesDate = filterDate === "" || filterDate === dateData;
+
+                // Display the item if all filters match, otherwise hide it
+                if (matchesItemName && matchesStatus && matchesDate) {
+                    item.style.display = 'list-item';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
